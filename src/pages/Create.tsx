@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { instance } from "@/hooks/instance"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useState, type FormEvent } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState, type FormEvent } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const Create = () => {
+    const {id} = useParams()
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 
@@ -17,25 +18,49 @@ const Create = () => {
     const [study, setStudy] = useState<string>("")
     const [region, setRegion] = useState<string>("")
 
+//     useEffect(() => {
+//     if (student) {
+//       setFirstname(student.firstname)
+//       setLastname(student.lastname)
+//       setAge(student.age)
+//       setStudy(student.study)
+//       setRegion(student.region)
+//     }
+//   }, [student])
+
+
     const createStudents = useMutation({
-        mutationFn:(body:StudentType) => instance().post("students", body),
-        onSuccess:() => {
-            toast("Created", {
-                description:"Qo'shildi!!!",
-                position:"top-center"
-            })
-            queryClient.invalidateQueries({queryKey: ['students']})
-            setTimeout(() => {
-                navigate(- 1)
-            }, 800)
-        }
+    mutationFn:(body:StudentType) =>
+    {  
+    if (id) {
+      return instance().put(`/students/${id}`, body)
+    }
+    else {
+      return instance().post("/students", body)
+    }
+    }
     })
+    
+    // const createStudents = useMutation({
+    //     mutationFn:(body:StudentType) => instance().post("students", body),
+    //     onSuccess:() => {
+    //         toast("Created", {
+    //             description:"Qo'shildi!!!",
+    //             position:"top-center"
+    //         })
+    //         queryClient.invalidateQueries({queryKey: ['students']})
+    //         setTimeout(() => {
+    //             navigate(- 1)
+    //         }, 800)
+    //     }
+    // })
 
     function handleCreateStudent(e: FormEvent<HTMLFormElement>){
         e.preventDefault()
         const data = {firstname, lastname, age, study, region}
         createStudents.mutate(data)
     }
+
 
   return (
     <form onSubmit={handleCreateStudent} autoComplete="off" className="w-[700px] p-5 rounded-lg bg-slate-800 mx-auto mt-8 ">
