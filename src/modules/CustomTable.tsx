@@ -36,7 +36,7 @@ export function CustomTable({data}:{data:StudentType[]}){
     </TableHeader>
     <TableBody>
         {data.map((item, index) => (
-        <TableRow>
+        <TableRow key={item.id}>
         <TableCell className="font-bold cursor-pointer text-[14px]">#{index + 1}</TableCell>
         <TableCell className="font-medium">{item.firstname}</TableCell>
         <TableCell className="font-medium">{item.lastname}</TableCell>

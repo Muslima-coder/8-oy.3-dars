@@ -13,7 +13,7 @@ const Home = () => {
     <div>
         <Header/>
         <div className="w-[1000px] mx-auto mt-5">
-            {isLoading ? <Loader/> : <CustomTable data={students}/>}
+            {isLoading ? <div className="mx-auto flex justify-center  !mt-5"><Loader/></div> : <CustomTable data={students}/>}
         </div>
     </div>
   )

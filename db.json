@@ -17,28 +17,20 @@
       "region": "Toshkent"
     },
     {
-      "id": "6933",
-      "firstname": "bnm",
-      "lastname": "bnmbnm",
-      "age": " bnm",
-      "study": " vbn",
-      "region": "vbn"
+      "id": "bac4",
+      "firstname": "Soliha",
+      "lastname": "Abduqodirova",
+      "age": "16",
+      "study": "maktab",
+      "region": "toshkent"
     },
     {
-      "id": "98fd",
-      "firstname": "vbnm",
-      "lastname": "bnm",
-      "age": "bnm",
-      "study": "bnm",
-      "region": "bnm,."
-    },
-    {
-      "id": "efc5",
-      "firstname": "vbnm bnm",
-      "lastname": "bnm,",
-      "age": "bnm",
-      "study": " bnm",
-      "region": " bnm"
+      "id": "ac89",
+      "firstname": "Laylo",
+      "lastname": "Ismatullayeva",
+      "age": "16",
+      "study": "maktab",
+      "region": "yunusobod"
     }
   ]
 }

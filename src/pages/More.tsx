@@ -1,13 +1,11 @@
-import type { StudentType } from "@/@types/StudentType"
 import { instance } from "@/hooks/instance"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import {  useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useParams } from "react-router-dom"
 
 const More = () => {
+  const queryClient = useQueryClient()
     const navigate = useNavigate()
     const {id} = useParams()
-    const [studentsMore, setStudentsMore] = useState<StudentType[]>([])
 
     const {data:studentMore = {}} = useQuery({
         queryKey:["student-more"],
@@ -16,20 +14,11 @@ const More = () => {
     console.log(studentMore);
 
     //Delete
-    //   const handleDelete = useMutation({
-    //   mutationFn: () => instance().delete(`/students/${id}`),
-    //   onSuccess: () => {
-    //     navigate("/");
-    //   },
-    // });
-
-   function handleDelete(id: string) {
-    setStudentsMore(data => data.filter(item => item.id !== id))
-    setTimeout(() => {
-      navigate("/")
-    }, 100)
-  }
-
+   const handleDelete = async (id:string) => {
+      await instance().delete(`/students/${id}`)
+      queryClient.invalidateQueries({ queryKey: ["students"] })
+      navigate("/") 
+     }
     
 
   return (
@@ -44,7 +33,6 @@ const More = () => {
       </div>
       <div className="flex items-center gap-15">
         <button onClick={() => navigate('/create')} className="p-2 w-[130px] border-none shadow-lg shadow-slate-300 font-semibold text-[18px] hover:scale-[1.1] duration-500 cursor-pointer bg-green-500 text-white rounded-2xl">Edit</button>
-        {/* <button onClick={() => handleDelete.mutate()} className="p-2 w-[130px] border-none shadow-lg shadow-slate-300 font-semibold text-[18px] hover:scale-[1.1] duration-500 cursor-pointer bg-red-500 text-white rounded-2xl">Delete</button> */}
         <button onClick={() => handleDelete(studentMore.id)} className="p-2 w-[130px] border-none shadow-lg shadow-slate-300 font-semibold text-[18px] hover:scale-[1.1] duration-500 cursor-pointer bg-red-500 text-white rounded-2xl">Delete</button>
       </div>
     </div>
